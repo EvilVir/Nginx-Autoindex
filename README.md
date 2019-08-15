@@ -80,3 +80,7 @@ Of course allowing anybody to upload any file to your server isn't the best idea
         auth_basic_user_file /srv/.htpasswd; # Set to path where you keep your .htpasswd file
     }
 ```
+
+## Credits
+
+Based on [ngx-superbindex](https://github.com/gibatronic/ngx-superbindex) by [Gibran Malheiros](https://github.com/gibatronic).
