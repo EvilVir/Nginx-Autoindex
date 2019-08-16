@@ -34,7 +34,7 @@ load_module "/etc/nginx/modules/ngx_http_xslt_filter_module.so";
         xslt_stylesheet /srv/autoindex.xslt;
     }
 ```
-1. Restart Nginx.
+3. Restart Nginx.
 
 And that's it! You have now modern web directory browser enabled.
 
