@@ -97,28 +97,28 @@ server {
     server_name "your_servername.com"; # Configure this
 
     location ~* /(?<subpath>[^/]*)/?(?<file>.*)$ {
-	    set $htaccess_user_file /srv/www/dropzone/$subpath/.htpasswd; # Set first part of the path to your root directory, leave `/$subpath/.htpasswd;` part
+	set $htaccess_user_file /srv/www/dropzone/$subpath/.htpasswd; # Set first part of the path to your root directory, leave `/$subpath/.htpasswd;` part
 
-	    if (!-f $htaccess_user_file) {
-	        return 599;
-	    }
+	if (!-f $htaccess_user_file) {
+		return 599;
+	}
 
-	    auth_basic "Please authenticate yourself";
-	    auth_basic_user_file $htaccess_user_file;
+	auth_basic "Please authenticate yourself";
+	auth_basic_user_file $htaccess_user_file;
 
-	    client_body_temp_path /srv/temp;
-	    dav_methods PUT;
-	    create_full_put_path on;
-	    dav_access group:rw all:r;
-	    client_max_body_size 1000M; # Change this as you need
+	client_body_temp_path /srv/temp;
+	dav_methods PUT;
+	create_full_put_path on;
+	dav_access group:rw all:r;
+	client_max_body_size 1000M; # Change this as you need
 
-	    root /srv/www/dropzone; # Change root to whatever you want
-	    autoindex on;
-	    autoindex_format xml;
-	    autoindex_exact_size off;
-	    autoindex_localtime off;
+	root /srv/www/dropzone; # Change root to whatever you want
+	autoindex on;
+	autoindex_format xml;
+	autoindex_exact_size off;
+	autoindex_localtime off;
 
-	    xslt_stylesheet /srv/autoindex.xslt;
+	xslt_stylesheet /srv/autoindex.xslt;
     }
 
     error_page 599 = @nosec;
@@ -165,6 +165,10 @@ In example above `My Folder 1` is standard folder with public access (no `.htpas
 `My Secret Folder 1` has `.htpasswd` inside so access to this location will require authentication, as well as access to `My Secret Folder 2` and anything inside it.
 
 `My Folder 3` is again standard folder with public access. There is `.htpasswd` in `Sub Folder 2` but it isn't used so access to `Unsecured.mp3` is still public.
+
+## Future plans
+1. Implement more WebDav options (COPY, DELETE, MOVE, MKCOL) and interface for them
+2. Include more layouts and styles and separate them from main xlst file
 
 ## Credits
 
