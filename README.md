@@ -20,7 +20,7 @@ load_module "/etc/nginx/modules/ngx_http_xslt_filter_module.so";
 ```
 
 ## Instalation
-1. Place `autoindex.xslt` file somewhere on your web server, it doesn't need to be in any www root directory, can be placed anywhere from where nginx daemon can read (in this documentation we assume that file is places under `/srv/autoindex.xslt`).
+1. Place `autoindex.xslt` file somewhere on your web server, it doesn't need to be in any www root directory, can be placed anywhere from where nginx daemon can read (in this documentation we assume that file is placed under `/srv/autoindex.xslt`).
 1. Configure location as follows:
 
 ```
