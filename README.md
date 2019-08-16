@@ -13,7 +13,11 @@ HTML5 replacement for default Nginx Autoindex directory browser. Zero dependenci
 1. Ensure that you have [ngx_http_xslt_module](http://nginx.org/en/docs/http/ngx_http_xslt_module.html) (it can be also called ngx_http_xslt_filter_module, that's ok).
 1. If you want to use upload functionality, you'll also need [ngx_http_dav_module](https://nginx.org/en/docs/http/ngx_http_dav_module.html).
 
-Both are included in most of standard distributions out of the box.
+Both are included in most of standard distributions out of the box, but you might need to initialize one or both of them them by using `load_module` directive in main `nginx.conf` file (place it outside any server, location or http block):
+
+```
+load_module "/etc/nginx/modules/ngx_http_xslt_filter_module.so";
+```
 
 ## Instalation
 1. Place `autoindex.xslt` file somewhere on your web server, it doesn't need to be in any www root directory, can be placed anywhere from where nginx daemon can read (in this documentation we assume that file is places under `/srv/autoindex.xslt`).
