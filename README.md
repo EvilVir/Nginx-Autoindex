@@ -38,7 +38,7 @@ load_module "/etc/nginx/modules/ngx_http_xslt_filter_module.so";
 
 And that's it! You have now modern web directory browser enabled.
 
-## Enabling uploads
+### Enabling uploads
 For uploads to work you need to enable WebDav on the location, let's extend our example from above:
 
 ```
@@ -60,6 +60,8 @@ For uploads to work you need to enable WebDav on the location, let's extend our 
 ```
 
 And now just navigate to the location and drag-and-drop a file into browser's window. This feature should work in any modern web browser _(sorry IE fans)_.
+
+## Advanced configuration (you can stop with config above if you want)
 
 ### Hardening uploads
 Of course allowing anybody to upload any file to your server isn't the best idea in the world, so you might want to think about adding at least [HTTP Basic Auth](https://en.wikipedia.org/wiki/.htpasswd):
