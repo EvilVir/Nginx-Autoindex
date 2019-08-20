@@ -71,6 +71,18 @@
 
 	<script type="text/javascript"><![CDATA[
 		document.addEventListener("DOMContentLoaded", function() {
+
+		    var req = new XMLHttpRequest();
+		    req.open('GET', document.location, false);
+		    req.send(null);
+		    var headers = parseHttpHeaders(req.getAllResponseHeaders().toLowerCase());
+		    
+		    if (!headers.hasOwnProperty('x-options')){
+			console.log("No WebDav on this location");
+			document.body.classList.add('nowebdav');			
+			return;
+		    }   
+
     
 		    var dropArea = document.getElementById('droparea');
 		    var progressWin = document.getElementById('progresswin');
@@ -180,6 +192,10 @@
 	                        });
 			}
   		    }
+
+		    function parseHttpHeaders(httpHeaders) {
+			return httpHeaders.split("\n").map(x=>x.split(/: */,2)).filter(x=>x[0]).reduce((ac, x)=>{ac[x[0]] = x[1];return ac;}, {});
+		    }
 		});
 	]]></script>
 
@@ -207,6 +223,7 @@
 		table#contents tr:hover td.actions ul { visibility: visible; }
 		table#contents tr td.actions ul li a { display: inline; padding: 10px 10px 10px 10px !important; }
 		table#contents tr td.actions ul li a:hover[data-action='delete'] { color: #c90000 !important; }
+		body.nowebdav table#contents tr td.actions ul { display: none !important; }
 
 		nav#breadcrumbs { margin-bottom: 50px; display: flex; justify-content: center; align-items: center; }
 		nav#breadcrumbs ul { list-style: none; display: inline-block; margin: 0px; padding: 0px; }
