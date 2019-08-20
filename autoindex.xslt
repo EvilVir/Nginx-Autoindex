@@ -70,86 +70,87 @@
 	]]></script>
 
 	<script type="text/javascript"><![CDATA[
-		document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function() {
     
-		    var dropArea = document.getElementById('droparea');
-		    var progressWin = document.getElementById('progresswin');
-		    var progressBar = document.getElementById('progressbar');
-		    var progressTrack = [];
-		    var totalFiles = 0;
-            
-		    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-		        dropArea.addEventListener(eventName, function (e){
-		            e.preventDefault();
-		            e.stopPropagation();
-		        }, false);
-		    });
-
-		    ['dragenter', 'dragover'].forEach(eventName => {
-		        dropArea.addEventListener(eventName, function(e) {
-		            dropArea.classList.add('highlight');
-		        }, false);
-		    });
-
-		    ['dragleave', 'drop'].forEach(eventName => {
-		        dropArea.addEventListener(eventName, function(e) {
-		            dropArea.classList.remove('highlight')
-		        }, false)
-		    });
-
-		    dropArea.addEventListener('drop', function(e) {
-		        var total = 0;
-
-		        for (var i=0; i<e.dataTransfer.files.length; i++) {
-		            var file = e.dataTransfer.files[i];
-		            progressTrack[i] = { current: 0, max: file.size };
-		            total += file.size;
-		            totalFiles++;
-		            uploadFile(file, i);
-		        }
-
-		        progressBar.value = 0;
-		        progressBar.max = total;
-		        progressWin.classList.add('show');
-		    }, false);
-
-		    function updateProgress(value, idx) {
-		        progressTrack[idx].value = value;
-
-		        var current = 0;
-		        for (var i=0; i<progressTrack.length; i++) {
-		            current += progressTrack[i].value;
-		        }
-
-		        progressBar.value = current || progressBar.value;
-		    }
+    var dropArea = document.getElementById('droparea');
+    var progressWin = document.getElementById('progresswin');
+    var progressBar = document.getElementById('progressbar');
+    var progressTrack = [];
+    var totalFiles = 0;
     
-		    function uploadFile(file, idx) {
-		        var xhr = new XMLHttpRequest();
-		        var formData = new FormData();
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, function (e){
+            e.preventDefault();
+            e.stopPropagation();
+        }, false);
+    });
 
-		        xhr.open('PUT', document.location.href + '/' + file.name, true);
-		        xhr.upload.addEventListener("progress", function(e) {
-		            updateProgress(e.loaded, idx);
-		        });
-        
-		        xhr.addEventListener('readystatechange', function(e) {
-		            if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 201 || xhr.status == 204)) {
-		                totalFiles--;
-		            } else if (xhr.readyState == 4) {
-		                alert (xhr.statusText);
-		                totalFiles--;
-		            }
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropArea.addEventListener(eventName, function(e) {
+            dropArea.classList.add('highlight');
+        }, false);
+    });
 
-		            if (totalFiles == 0) {
-		                document.location.reload();
-		            }
-		        });
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, function(e) {
+            dropArea.classList.remove('highlight')
+        }, false)
+    });
 
-		        formData.append('file', file);
-		        xhr.send(formData);
-		    }
-		});
+    dropArea.addEventListener('drop', function(e) {
+        var total = 0;
+
+        for (var i=0; i<e.dataTransfer.files.length; i++) {
+            var file = e.dataTransfer.files[i];
+            progressTrack[i] = { current: 0, max: file.size };
+            total += file.size;
+            totalFiles++;
+            uploadFile(file, i);
+        }
+
+        progressBar.value = 0;
+        progressBar.max = total;
+        progressWin.classList.add('show');
+    }, false);
+
+    function updateProgress(value, idx) {
+        progressTrack[idx].value = value;
+
+        var current = 0;
+        for (var i=0; i<progressTrack.length; i++) {
+            current += progressTrack[i].value;
+        }
+
+        progressBar.value = current || progressBar.value;
+    }
+
+    function uploadFile(file, idx) {
+        var xhr = new XMLHttpRequest();
+        var formData = new FormData();
+
+        xhr.open('PUT', document.location.href + '/' + file.name, true);
+        xhr.upload.addEventListener("progress", function(e) {
+            updateProgress(e.loaded, idx);
+        });
+
+        xhr.addEventListener('readystatechange', function(e) {
+            if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 201 || xhr.status == 204)) {
+                totalFiles--;
+            } else if (xhr.readyState == 4) {
+                alert (xhr.statusText);
+                console.log(xhr);
+                totalFiles--;
+            }
+
+            if (totalFiles == 0) {
+                document.location.reload();
+            }
+        });
+
+        xhr.setRequestHeader('Content-Type', 'application/octet-stream');
+        xhr.send(file);
+    }
+});
 	]]></script>
 
 	<style type="text/css"><![CDATA[
