@@ -70,87 +70,117 @@
 	]]></script>
 
 	<script type="text/javascript"><![CDATA[
-document.addEventListener("DOMContentLoaded", function() {
+		document.addEventListener("DOMContentLoaded", function() {
     
-    var dropArea = document.getElementById('droparea');
-    var progressWin = document.getElementById('progresswin');
-    var progressBar = document.getElementById('progressbar');
-    var progressTrack = [];
-    var totalFiles = 0;
+		    var dropArea = document.getElementById('droparea');
+		    var progressWin = document.getElementById('progresswin');
+		    var progressBar = document.getElementById('progressbar');
+		    var progressTrack = [];
+		    var totalFiles = 0;
     
-    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-        dropArea.addEventListener(eventName, function (e){
-            e.preventDefault();
-            e.stopPropagation();
-        }, false);
-    });
+		    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+		        dropArea.addEventListener(eventName, function (e){
+		            e.preventDefault();
+		            e.stopPropagation();
+		        }, false);
+		    });
 
-    ['dragenter', 'dragover'].forEach(eventName => {
-        dropArea.addEventListener(eventName, function(e) {
-            dropArea.classList.add('highlight');
-        }, false);
-    });
+		    ['dragenter', 'dragover'].forEach(eventName => {
+		        dropArea.addEventListener(eventName, function(e) {
+		            dropArea.classList.add('highlight');
+		        }, false);
+		    });
 
-    ['dragleave', 'drop'].forEach(eventName => {
-        dropArea.addEventListener(eventName, function(e) {
-            dropArea.classList.remove('highlight')
-        }, false)
-    });
+		    ['dragleave', 'drop'].forEach(eventName => {
+		        dropArea.addEventListener(eventName, function(e) {
+		            dropArea.classList.remove('highlight')
+		        }, false);
+		    });
 
-    dropArea.addEventListener('drop', function(e) {
-        var total = 0;
+		    document.querySelectorAll('table#contents tr td.actions ul li a[data-action]').forEach(el => {
+			el.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            e.stopPropagation();
 
-        for (var i=0; i<e.dataTransfer.files.length; i++) {
-            var file = e.dataTransfer.files[i];
-            progressTrack[i] = { current: 0, max: file.size };
-            total += file.size;
-            totalFiles++;
-            uploadFile(file, i);
-        }
+			    var source = event.target || event.srcElement;
+			    var action = source.getAttribute('data-action');
+			    var href = source.getAttribute('href');
 
-        progressBar.value = 0;
-        progressBar.max = total;
-        progressWin.classList.add('show');
-    }, false);
+			    if (action == 'delete') {
+				deleteFile(href);
+			    }
 
-    function updateProgress(value, idx) {
-        progressTrack[idx].value = value;
+			}, false);
+		    });
 
-        var current = 0;
-        for (var i=0; i<progressTrack.length; i++) {
-            current += progressTrack[i].value;
-        }
+		    dropArea.addEventListener('drop', function(e) {
+		        var total = 0;
 
-        progressBar.value = current || progressBar.value;
-    }
+		        for (var i=0; i<e.dataTransfer.files.length; i++) {
+		            var file = e.dataTransfer.files[i];
+		            progressTrack[i] = { current: 0, max: file.size };
+		            total += file.size;
+		            totalFiles++;
+		            uploadFile(file, i);
+		        }
 
-    function uploadFile(file, idx) {
-        var xhr = new XMLHttpRequest();
-        var formData = new FormData();
+		        progressBar.value = 0;
+		        progressBar.max = total;
+		        progressWin.classList.add('show');
+		    }, false);
 
-        xhr.open('PUT', document.location.href + '/' + file.name, true);
-        xhr.upload.addEventListener("progress", function(e) {
-            updateProgress(e.loaded, idx);
-        });
+		    function updateProgress(value, idx) {
+		        progressTrack[idx].value = value;
 
-        xhr.addEventListener('readystatechange', function(e) {
-            if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 201 || xhr.status == 204)) {
-                totalFiles--;
-            } else if (xhr.readyState == 4) {
-                alert (xhr.statusText);
-                console.log(xhr);
-                totalFiles--;
-            }
+		        var current = 0;
+		        for (var i=0; i<progressTrack.length; i++) {
+		            current += progressTrack[i].value;
+		        }
 
-            if (totalFiles == 0) {
-                document.location.reload();
-            }
-        });
+		        progressBar.value = current || progressBar.value;
+		    }
 
-        xhr.setRequestHeader('Content-Type', 'application/octet-stream');
-        xhr.send(file);
-    }
-});
+		    function uploadFile(file, idx) {
+		        var xhr = new XMLHttpRequest();
+		        var formData = new FormData();
+
+		        xhr.open('PUT', document.location.href + '/' + file.name, true);
+		        xhr.upload.addEventListener("progress", function(e) {
+		            updateProgress(e.loaded, idx);
+		        });
+
+		        xhr.addEventListener('readystatechange', function(e) {
+		            if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 201 || xhr.status == 204)) {
+		                totalFiles--;
+		            } else if (xhr.readyState == 4) {
+		                alert (xhr.statusText);
+		                console.log(xhr);
+		                totalFiles--;
+		            }
+
+		            if (totalFiles == 0) {
+		                document.location.reload();
+		            }
+		        });
+
+		        xhr.setRequestHeader('Content-Type', 'application/octet-stream');
+		        xhr.send(file);
+		    }
+
+		    function deleteFile(path) {
+			if (confirm('Are you sure you want to delete [' + path + ']?')) {
+				var xhr = new XMLHttpRequest();
+				xhr.open('DELETE', document.location.href + '/' + path, true);
+				xhr.send();
+	                        xhr.addEventListener('readystatechange', function(e) {
+
+                        	        if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 201 || xhr.status == 204)) {
+	        	                        document.location.reload();
+		                        }
+	                        });
+			}
+  		    }
+		});
 	]]></script>
 
 	<style type="text/css"><![CDATA[
@@ -158,10 +188,10 @@ document.addEventListener("DOMContentLoaded", function() {
 		html { margin: 0px; padding: 0px; height: 100%; width: 100%; }
 		body { background-color: #303030; font-family: Verdana, Geneva, sans-serif; font-size: 14px; padding: 20px; margin: 0px; height: 100%; width: 100%; }
 
-		table#contents td a { text-decoration: none; display: block; padding: 10px 30px 10px 30px; }
+		table#contents td a { text-decoration: none; display: block; padding: 10px 30px 10px 30px; pointer: default; }
 		table#contents { width: 50%; margin-left: auto; margin-right: auto; border-collapse: collapse; border-width: 0px; }
 		table#contents td { padding: 0px; word-wrap: none; white-space: nowrap; }
-		table#contents td.icon, table td.size, table td.mtime { width: 1px; }
+		table#contents td.icon, table td.size, table td.mtime, table td.actions { width: 1px; white-space: nowrap; }
 		table#contents td.icon a { padding-left: 0px; padding-right: 5px; }
 		table#contents td.name a { padding-left: 5px; }
 		table#contents td.size a { color: #9e9e9e }
@@ -172,6 +202,11 @@ document.addEventListener("DOMContentLoaded", function() {
 		table#contents tr.directory.go-up td.icon i { color: #BF8EF3 !important; }
 		table#contents tr.separator td { padding: 10px 30px 10px 30px }
 		table#contents tr.separator td hr { display: none; }
+		table#contents tr td.actions ul { list-style-type: none; margin: 0px; padding: 0px; visibility: hidden; }
+		table#contents tr td.actions ul li { float: left; }
+		table#contents tr:hover td.actions ul { visibility: visible; }
+		table#contents tr td.actions ul li a { display: inline; padding: 10px 10px 10px 10px !important; }
+		table#contents tr td.actions ul li a:hover[data-action='delete'] { color: #c90000 !important; }
 
 		nav#breadcrumbs { margin-bottom: 50px; display: flex; justify-content: center; align-items: center; }
 		nav#breadcrumbs ul { list-style: none; display: inline-block; margin: 0px; padding: 0px; }
@@ -216,6 +251,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	              <td class="name"><a href="../">..</a></td>
 	              <td class="size"><a href="../"></a></td>
 	              <td class="mtime"><a href="../"></a></td>
+                      <td class="actions"><a href="../"></a></td>
 	            </tr>
 	
 	          <xsl:if test="count(list/directory) != 0">
@@ -230,6 +266,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	              <td class="name"><a href="{.}"><xsl:value-of select="." /></a></td>
 	              <td class="size"><a href="{.}"></a></td>
 	              <td class="mtime"><a href="{.}"><xsl:value-of select="./@mtime" /></a></td>
+		      <td class="actions"><a href="{.}"></a></td>
 	            </tr>
 	          </xsl:for-each>
 
@@ -245,6 +282,11 @@ document.addEventListener("DOMContentLoaded", function() {
 	              <td class="name"><a href="{.}" download="{.}"><xsl:value-of select="." /></a></td>
 	              <td class="size"><a href="{.}" download="{.}"><xsl:value-of select="./@size" /></a></td>
 	              <td class="mtime"><a href="{.}" download="{.}"><xsl:value-of select="./@mtime" /></a></td>
+                      <td class="actions">
+			<ul>
+				<li><a href="{.}" data-action="delete" class="fa fa-trash"></a></li>
+			</ul>
+		      </td>
 	            </tr>
 	          </xsl:for-each>
 	        </tbody>
