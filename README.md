@@ -53,6 +53,7 @@ For uploads to work you need to enable WebDav on the location, let's extend our 
 
 	client_body_temp_path /srv/temp; # Set to path where WebDav will save temporary files
 	dav_methods PUT;
+	add_header X-Options "WebDav"; # Important!
         create_full_put_path on;
         dav_access group:rw all:r;
 	client_max_body_size 1000M; # Change this as you need
@@ -78,6 +79,7 @@ Of course allowing anybody to upload any file to your server isn't the best idea
 
 	client_body_temp_path /srv/temp; # Set to path where WebDav will save temporary files
 	dav_methods PUT;
+	add_header X-Options "WebDav"; # Important!
         create_full_put_path on;
         dav_access group:rw all:r;
 	client_max_body_size 1000M; # Change this as you need
@@ -108,6 +110,7 @@ server {
 
 	client_body_temp_path /srv/temp;
 	dav_methods PUT;
+	add_header X-Options "WebDav"; # Important!
 	create_full_put_path on;
 	dav_access group:rw all:r;
 	client_max_body_size 1000M; # Change this as you need
