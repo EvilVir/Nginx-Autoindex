@@ -72,17 +72,19 @@
 	<script type="text/javascript"><![CDATA[
 		document.addEventListener("DOMContentLoaded", function() {
 
-		    var req = new XMLHttpRequest();
-		    req.open('GET', document.location, false);
-		    req.send(null);
-		    var headers = parseHttpHeaders(req.getAllResponseHeaders().toLowerCase());
-		    
-		    if (!headers.hasOwnProperty('x-options')){
-			console.log("No WebDav on this location");
-			document.body.classList.add('nowebdav');			
-			return;
-		    }   
+		    var xhr = new XMLHttpRequest();
+		    xhr.open('GET', document.location, true);
+		    xhr.send(null);
 
+                    xhr.addEventListener('readystatechange', function(e) {
+			if (xhr.readyState == 4) {
+			    var headers = parseHttpHeaders(xhr.getAllResponseHeaders().toLowerCase());
+
+			    if (!headers.hasOwnProperty('x-options')){
+				document.body.classList.add('nowebdav');
+			    }
+			}
+                    });
     
 		    var dropArea = document.getElementById('droparea');
 		    var progressWin = document.getElementById('progresswin');
