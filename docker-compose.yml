@@ -88,6 +88,7 @@ services:
           mkdir -p /usr/share/nginx/html/videos
           touch /usr/share/nginx/html/videos/hello.mp4
           ls -al /usr/share/nginx/html
+          chown -R nginx:nginx /usr/share/nginx/html
 
           # Run nginx: https://github.com/nginxinc/docker-nginx/blob/1.21.4/mainline/alpine/Dockerfile
           ln -sf /dev/stdout /var/log/nginx/access.log
