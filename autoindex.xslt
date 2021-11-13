@@ -281,11 +281,11 @@
 
 	          <xsl:for-each select="list/directory">
 	            <tr class="directory">
-	              <td class="icon"><a href="{.}"><i class="fa fa-folder"></i></a></td>
-	              <td class="name"><a href="{.}"><xsl:value-of select="." /></a></td>
-	              <td class="size"><a href="{.}"></a></td>
-	              <td class="mtime"><a href="{.}"><xsl:value-of select="./@mtime" /></a></td>
-		      <td class="actions"><a href="{.}"></a></td>
+	              <td class="icon"><a href="{.}/"><i class="fa fa-folder"></i></a></td>
+	              <td class="name"><a href="{.}/"><xsl:value-of select="." /></a></td>
+	              <td class="size"><a href="{.}/"></a></td>
+	              <td class="mtime"><a href="{.}/"><xsl:value-of select="./@mtime" /></a></td>
+		      <td class="actions"><a href="{.}/"></a></td>
 	            </tr>
 	          </xsl:for-each>
 
@@ -315,4 +315,3 @@
   </html>
   </xsl:template>
 </xsl:stylesheet>
-
