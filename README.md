@@ -169,6 +169,13 @@ In example above `My Folder 1` is standard folder with public access (no `.htpas
 
 `My Folder 3` is again standard folder with public access. There is `.htpasswd` in `Sub Folder 2` but it isn't used so access to `Unsecured.mp3` is still public.
 
+## Development
+
+```sh
+docker-compose up
+# Site is available at http://localhost:8080
+```
+
 ## Future plans
 1. Implement more WebDav options (COPY, DELETE, MOVE, MKCOL) and interface for them
 2. Include more layouts and styles and separate them from main xlst file
