@@ -39,8 +39,8 @@
 		
                     for (var i=1; i<path.length-1; i++)
                     {
-			pathSoFar += '/' + path[i];
-                        nav.innerHTML += '<li><a href="' + encodeURI(pathSoFar)  + '">' + path[i] + '</a></li>';
+			pathSoFar += '/' + decodeURI(path[i]);
+                        nav.innerHTML += '<li><a href="' + encodeURI(pathSoFar)  + '">' + decodeURI(path[i]) + '</a></li>';
                     }
 
 		    var mtimes = document.querySelectorAll("table#contents td.mtime a");
