@@ -8,7 +8,7 @@
 
   <html>
     <head>
-      <title>DropZone</title>
+      <!-- <title>DropZone</title> -->
 	<script src="https://kit.fontawesome.com/55eb9c16a8.js"></script>
 	<script type="text/javascript"><![CDATA[
 		document.addEventListener('DOMContentLoaded', function(){ 
