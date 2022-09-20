@@ -10,7 +10,7 @@
 	</D:multistatus>
 </xsl:template>
 
-<xsl:template match="list">
+<xsl:template match="/list">
   <xsl:text disable-output-escaping="yes">&lt;!DOCTYPE html&gt;</xsl:text>
 
   <html>
@@ -279,13 +279,13 @@
                       <td class="actions"><a href="../"></a></td>
 	            </tr>
 	
-	          <xsl:if test="count(list/directory) != 0">
+	          <xsl:if test="count(directory) != 0">
 	            <tr class="separator directories">
 	              <td colspan="4"><hr/></td>
 	            </tr>
 	          </xsl:if>
 
-	          <xsl:for-each select="list/directory">
+	          <xsl:for-each select="directory">
 	            <tr class="directory">
 	              <td class="icon"><a href="{.}/"><i class="fa fa-folder"></i></a></td>
 	              <td class="name"><a href="{.}/"><xsl:value-of select="." /></a></td>
@@ -295,13 +295,13 @@
 	            </tr>
 	          </xsl:for-each>
 
-	          <xsl:if test="count(list/file) != 0">
+	          <xsl:if test="count(file) != 0">
 	            <tr class="separator files">
 	              <td colspan="4"><hr/></td>
 	            </tr>
 	          </xsl:if>
 
-	          <xsl:for-each select="list/file">
+	          <xsl:for-each select="file">
 	            <tr class="file">
 	              <td class="icon"><a href="{.}" download="{.}"><i class="fa fa-file"></i></a></td>
 	              <td class="name"><a href="{.}" download="{.}"><xsl:value-of select="." /></a></td>
