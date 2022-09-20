@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:D="DAV:" exclude-result-prefixes="D">
 <xsl:output method="html" encoding="UTF-8" />
 
-<xsl:template match="/">
+<xsl:template match="D:multistatus">
+	<xsl:text disable-output-escaping="yes">&lt;?xml version="1.0" encoding="utf-8" ?&gt;</xsl:text>
+	<D:multistatus xmlns:D="DAV:">
+		<xsl:copy-of select="*"/>
+	</D:multistatus>
+</xsl:template>
+
+<xsl:template match="list">
   <xsl:text disable-output-escaping="yes">&lt;!DOCTYPE html&gt;</xsl:text>
 
   <html>
     <head>
-      <!-- <title>DropZone</title> -->
 	<script src="https://kit.fontawesome.com/55eb9c16a8.js"></script>
 	<script type="text/javascript"><![CDATA[
 		document.addEventListener('DOMContentLoaded', function(){ 
