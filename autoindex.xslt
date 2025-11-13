@@ -271,7 +271,11 @@
 		div#progresswin.show { display: flex !important; }
 		div#progresswin progress#progressbar { width: 25%; }
 
-		.icon { font-family: "glyphs"; font-style: normal; font-weight: normal; speak: never; display: inline-block; text-decoration: inherit; width: 1em; margin-right: .4em; text-align: center; font-variant: normal; text-transform: none; line-height: 1em; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-size: 1.1em; }
+		.icon { font-family: "glyphs"; font-style: normal; font-weight: normal; speak: never; display: inline-block; text-decoration: inherit; width: 1em; margin-right: .4em; text-align: center; font-variant: normal; text-transform: none; line-height: 1em; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+		.icon-file { font-size: 1em }
+		.icon-folder { font-size: 1.1em }
+		.icon-up { font-size: 1.1em }
+		.icon-trash { font-size: 1.1em }
 	]]></style>
     </head>
     <body>
@@ -279,11 +283,11 @@
         <progress id="progressbar"></progress>
       </div>
       <div id="droparea">
-	      <nav id="breadcrumbs"><ul><li><a href="/"><i class="icon">&#xe80a;</i></a></li></ul></nav>
+	      <nav id="breadcrumbs"><ul><li><a href="/"><i class="icon icon-home">&#xe80a;</i></a></li></ul></nav>
 	      <table id="contents">
 	        <tbody>
 	            <tr class="directory go-up">
-	              <td class="icon"><a href="../"><i class="icon">&#xe800;</i></a></td>
+	              <td class="icon"><a href="../"><i class="icon icon-up">&#xe800;</i></a></td>
 	              <td class="name"><a href="../">..</a></td>
 	              <td class="size"><a href="../"></a></td>
 	              <td class="mtime"><a href="../"></a></td>
@@ -298,7 +302,7 @@
 
 	          <xsl:for-each select="directory">
 	            <tr class="directory">
-	              <td class="icon"><a href="{.}/"><i class="icon">&#xe801;</i></a></td>
+	              <td class="icon"><a href="{.}/"><i class="icon icon-folder">&#xe801;</i></a></td>
 	              <td class="name"><a href="{.}/"><xsl:value-of select="." /></a></td>
 	              <td class="size"><a href="{.}/"></a></td>
 	              <td class="mtime"><a href="{.}/"><xsl:value-of select="./@mtime" /></a></td>
@@ -314,13 +318,13 @@
 
 	          <xsl:for-each select="file">
 	            <tr class="file">
-	              <td class="icon"><a href="{.}" download="{.}"><i class="icon">&#xf15b;</i></a></td>
+	              <td class="icon"><a href="{.}" download="{.}"><i class="icon icon-file">&#xf15b;</i></a></td>
 	              <td class="name"><a href="{.}" download="{.}"><xsl:value-of select="." /></a></td>
 	              <td class="size"><a href="{.}" download="{.}"><xsl:value-of select="./@size" /></a></td>
 	              <td class="mtime"><a href="{.}" download="{.}"><xsl:value-of select="./@mtime" /></a></td>
                       <td class="actions">
 			<ul>
-				<li><a href="{.}" data-action="delete" class="icon">&#xf1f8;</a></li>
+				<li><a href="{.}" data-action="delete" class="icon icon-trash">&#xf1f8;</a></li>
 			</ul>
 		      </td>
 	            </tr>
