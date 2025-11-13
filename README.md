@@ -1,5 +1,5 @@
 # Nginx Autoindex
-HTML5 replacement for default Nginx Autoindex directory browser. Zero dependencies other then few standard Nginx modules, no backend scripts nor apps. Supports file uploading via WebDav and HTML5 + AJAX drag and drop!
+HTML5 replacement for default Nginx Autoindex directory browser. Zero dependencies other than few standard Nginx modules, no backend scripts nor apps. Supports file uploading via WebDav and HTML5 + AJAX drag and drop!
 
 **Modern, clean look with breadcrumbs.**
 
