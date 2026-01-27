@@ -244,7 +244,7 @@
 
 		nav#breadcrumbs { margin-bottom: 50px; display: flex; justify-content: center; align-items: center; }
 		nav#breadcrumbs ul { list-style: none; display: inline-block; margin: 0px; padding: 0px; }
-		nav#breadcrumbs ul .icon { font-size: 14px; }
+		nav#breadcrumbs ul .icon { font-size: 20px; margin-right: 0; line-height: inherit; }
 		nav#breadcrumbs ul li { float: left; }
 		nav#breadcrumbs ul li a { color: #FFF; display: block; background: #515151; text-decoration: none; position: relative; height: 40px; line-height: 40px; padding: 0 10px 0 5px; text-align: center; margin-right: 23px; }
 		nav#breadcrumbs ul li:nth-child(even) a { background-color: #525252; }
@@ -254,6 +254,7 @@
 		nav#breadcrumbs ul li:first-child a:before { border: none; }
 		nav#breadcrumbs ul li:last-child a { padding-right: 15px; -moz-border-radius: 0 4px 4px 0; -webkit-border-radius: 0; border-radius: 0 4px 4px 0; }
 		nav#breadcrumbs ul li:last-child a:after { border: none; }
+		nav#breadcrumbs ul li:first-child:last-child a { border-radius: 4px 4px 4px 4px; }
 		nav#breadcrumbs ul li a:before, nav#breadcrumbs ul li a:after { content: ""; position: absolute; top: 0; border: 0 solid #515151; border-width: 20px 10px; width: 0; height: 0; }
 		nav#breadcrumbs ul li a:before { left: -20px; border-left-color: transparent; }
 		nav#breadcrumbs ul li a:after { left: 100%; border-color: transparent; border-left-color: #515151; }
@@ -271,7 +272,7 @@
 		div#progresswin.show { display: flex !important; }
 		div#progresswin progress#progressbar { width: 25%; }
 
-		.icon { font-family: "glyphs"; font-style: normal; font-weight: normal; speak: never; display: inline-block; text-decoration: inherit; width: 1em; margin-right: .4em; text-align: center; font-variant: normal; text-transform: none; line-height: 1em; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+		.icon { font-family: "glyphs"; font-style: normal; font-weight: normal; speak: never; text-decoration: inherit; width: 1em; margin-right: .4em; text-align: center; font-variant: normal; text-transform: none; line-height: 1em; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 		.icon-file { font-size: 1em }
 		.icon-folder { font-size: 1.1em }
 		.icon-up { font-size: 1.1em }
